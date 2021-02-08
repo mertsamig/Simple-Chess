@@ -24,6 +24,10 @@ int possible[9999];
 int a = 1;
 int sayac = 0;
 void sifirla();
+int checkinput(int);
+void kaydet(int);
+void sifirla();
+void sifirla2();
 
 int pwmoves[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 int pbmoves[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -50,7 +54,7 @@ int main() {
     } else {
       white();
     }
-    printf("\n\nPress enter to continue!\n\n");
+    printf("\n\nPress enter to continue\n\n");
     ch = getch();
   } while (ch == 13);
 }
@@ -250,17 +254,17 @@ void rookb(int r1, int c1) {
     kaydet(((r1)*10) + n + 1);
   }
   n = r1;
-  while (board[n + 1][c1] == ' ' && n > -1) {
+  while (board[n + 1][c1] == ' ' && (n + 1) < 8) {
     kaydet(((n + 1) * 10) + c1);
-    --n;
+    ++n;
   }
   if (checkforb(n + 1, c1) == 1) {
     kaydet(((n + 1) * 10) + c1);
   }
   n = r1;
-  while ((board[n - 1][c1] == ' ') && ((n) <= 7)) {
+  while ((board[n - 1][c1] == ' ') && (n - 1) > -1) {
     kaydet(((n - 1) * 10) + c1);
-    ++n;
+    --n;
   }
   if (checkforb(n - 1, c1) == 1) {
     kaydet(((n - 1) * 10) + c1);
@@ -289,17 +293,17 @@ void rookw(int r1, int c1) {
     kaydet(((r1)*10) + n + 1);
   }
   n = r1;
-  while (board[n + 1][c1] == ' ' && n > -1) {
+  while (board[n + 1][c1] == ' ' && (n + 1) < 8) {
     kaydet(((n + 1) * 10) + c1);
-    --n;
+    ++n;
   }
   if (checkforw(n + 1, c1) == 1) {
     kaydet(((n + 1) * 10) + c1);
   }
   n = r1;
-  while ((board[n - 1][c1] == ' ') && ((n) <= 7)) {
+  while ((board[n - 1][c1] == ' ') && (n - 1) > -1) {
     kaydet(((n - 1) * 10) + c1);
-    ++n;
+    --n;
   }
   if (checkforw(n - 1, c1) == 1) {
     kaydet(((n - 1) * 10) + c1);
@@ -307,24 +311,22 @@ void rookw(int r1, int c1) {
 }
 
 void horseb(int r1, int c1) {
-  if (board[r1 - 2][c1 + 1] == ' ') kaydet(((r1 - 2) * 10) + c1 + 1);
-  if (board[r1 - 2][c1 - 1] == ' ') {
-    if ((c1 - 1) > -1) kaydet(((r1 - 2) * 10) + c1 - 1);
-  }
-  if (board[r1 - 1][c1 + 2] == ' ') {
-    if ((c1 + 2) != 8) kaydet(((r1 - 1) * 10) + c1 + 2);
-  }
-  if (board[r1 + 1][c1 + 2] == ' ') {
+  if (board[r1 - 2][c1 + 1] == ' ' && (r1 - 2) > -1 && (c1 + 1) < 8)
+    kaydet(((r1 - 2) * 10) + c1 + 1);
+  if (board[r1 - 2][c1 - 1] == ' ' && (r1 - 2) > -1 && (c1 - 1) > -1)
+    kaydet(((r1 - 2) * 10) + c1 - 1);
+  if (board[r1 - 1][c1 + 2] == ' ' && (r1 - 1) > -1 && (c1 + 2) < 8)
+    kaydet(((r1 - 1) * 10) + c1 + 2);
+  if (board[r1 + 1][c1 + 2] == ' ' && (r1 + 1) < 8 && (c1 + 2) < 8)
     kaydet(((r1 + 1) * 10) + c1 + 2);
-  }
-  if (board[r1 + 2][c1 - 1] == ' ') {
-    if ((c1 - 1) != -1) kaydet(((r1 + 2) * 10) + c1 - 1);
-  }
-  if (board[r1 + 2][c1 + 1] == ' ') kaydet(((r1 + 2) * 10) + c1 + 1);
-  if (board[r1 - 1][c1 - 2] == ' ') kaydet(((r1 - 1) * 10) + c1 - 2);
-  if (board[r1 + 1][c1 - 2] == ' ') {
-    if ((c1 - 2) != -1) kaydet(((r1 + 1) * 10) + c1 - 2);
-  }
+  if (board[r1 + 2][c1 - 1] == ' ' && (r1 + 2) < 8 && (c1 - 1) > -1)
+    kaydet(((r1 + 2) * 10) + c1 - 1);
+  if (board[r1 + 2][c1 + 1] == ' ' && (r1 + 2) < 8 && (c1 + 1) < 8)
+    kaydet(((r1 + 2) * 10) + c1 + 1);
+  if (board[r1 - 1][c1 - 2] == ' ' && (r1 - 1) > -1 && (c1 - 2) > -1)
+    kaydet(((r1 - 1) * 10) + c1 - 2);
+  if (board[r1 + 1][c1 - 2] == ' ' && (r1 + 1) < 8 && (c1 - 2) > -1)
+    kaydet(((r1 + 1) * 10) + c1 - 2);
   if (checkforb(r1 - 2, c1 + 1) == 1) {
     kaydet(((r1 - 2) * 10) + c1 + 1);
   }
@@ -352,24 +354,22 @@ void horseb(int r1, int c1) {
 }
 
 void horsew(int r1, int c1) {
-  if (board[r1 - 2][c1 + 1] == ' ') kaydet(((r1 - 2) * 10) + c1 + 1);
-  if (board[r1 - 2][c1 - 1] == ' ') {
-    if ((c1 - 1) > -1) kaydet(((r1 - 2) * 10) + c1 - 1);
-  }
-  if (board[r1 - 1][c1 + 2] == ' ') {
-    if ((c1 + 2) != 8) kaydet(((r1 - 1) * 10) + c1 + 2);
-  }
-  if (board[r1 + 1][c1 + 2] == ' ') {
+  if (board[r1 - 2][c1 + 1] == ' ' && (r1 - 2) > -1 && (c1 + 1) < 8)
+    kaydet(((r1 - 2) * 10) + c1 + 1);
+  if (board[r1 - 2][c1 - 1] == ' ' && (r1 - 2) > -1 && (c1 - 1) > -1)
+    kaydet(((r1 - 2) * 10) + c1 - 1);
+  if (board[r1 - 1][c1 + 2] == ' ' && (r1 - 1) > -1 && (c1 + 2) < 8)
+    kaydet(((r1 - 1) * 10) + c1 + 2);
+  if (board[r1 + 1][c1 + 2] == ' ' && (r1 + 1) < 8 && (c1 + 2) < 8)
     kaydet(((r1 + 1) * 10) + c1 + 2);
-  }
-  if (board[r1 + 2][c1 - 1] == ' ') {
-    if ((c1 - 1) != -1) kaydet(((r1 + 2) * 10) + c1 - 1);
-  }
-  if (board[r1 + 2][c1 + 1] == ' ') kaydet(((r1 + 2) * 10) + c1 + 1);
-  if (board[r1 - 1][c1 - 2] == ' ') kaydet(((r1 - 1) * 10) + c1 - 2);
-  if (board[r1 + 1][c1 - 2] == ' ') {
-    if ((c1 - 2) != -1) kaydet(((r1 + 1) * 10) + c1 - 2);
-  }
+  if (board[r1 + 2][c1 - 1] == ' ' && (r1 + 2) < 8 && (c1 - 1) > -1)
+    kaydet(((r1 + 2) * 10) + c1 - 1);
+  if (board[r1 + 2][c1 + 1] == ' ' && (r1 + 2) < 8 && (c1 + 1) < 8)
+    kaydet(((r1 + 2) * 10) + c1 + 1);
+  if (board[r1 - 1][c1 - 2] == ' ' && (r1 - 1) > -1 && (c1 - 2) > -1)
+    kaydet(((r1 - 1) * 10) + c1 - 2);
+  if (board[r1 + 1][c1 - 2] == ' ' && (r1 + 1) < 8 && (c1 - 2) > -1)
+    kaydet(((r1 + 1) * 10) + c1 - 2);
   if (checkforw(r1 - 2, c1 + 1) == 1) {
     kaydet(((r1 - 2) * 10) + c1 + 1);
   }
@@ -400,7 +400,7 @@ void camelb(int r1, int c1) {
   int a, b, c, d;
   a = 1, b = 1;
   while (board[r1 + a][c1 + b] == ' ') {
-    if ((r1 + a) == -1 || (c1 + b) == 8) break;
+    if ((r1 + a) == 8 || (c1 + b) == 8) break;
     kaydet(((r1 + a) * 10) + c1 + b);
     a++;
     b++;
@@ -410,7 +410,7 @@ void camelb(int r1, int c1) {
   }
   a = 1, b = 1;
   while (board[r1 - a][c1 - b] == ' ') {
-    if ((r1 - a) == 8 || (c1 - b) == -1) break;
+    if ((r1 - a) == -1 || (c1 - b) == -1) break;
     kaydet(((r1 - a) * 10) + c1 - b);
     a++;
     b++;
@@ -420,7 +420,7 @@ void camelb(int r1, int c1) {
   }
   a = 1, b = 1;
   while (board[r1 - a][c1 + b] == ' ') {
-    if ((r1 - a) == 8 || (c1 + b) == 8) break;
+    if ((r1 - a) == -1 || (c1 + b) == 8) break;
     kaydet(((r1 - a) * 10) + c1 + b);
     a++;
     b++;
@@ -431,7 +431,7 @@ void camelb(int r1, int c1) {
   a = 1;
   b = 1;
   while (board[r1 + a][c1 - b] == ' ') {
-    if ((r1 + a) == -1 || (c1 - b) == -1) break;
+    if ((r1 + a) == 8 || (c1 - b) == -1) break;
     kaydet(((r1 + a) * 10) + c1 - b);
     a++;
     b++;
@@ -445,7 +445,7 @@ void camelw(int r1, int c1) {
   int a, b, c, d;
   a = 1, b = 1;
   while (board[r1 + a][c1 + b] == ' ') {
-    if ((r1 + a) == -1 || (c1 + b) == 8) break;
+    if ((r1 + a) == 8 || (c1 + b) == 8) break;
     kaydet(((r1 + a) * 10) + c1 + b);
     a++;
     b++;
@@ -455,7 +455,7 @@ void camelw(int r1, int c1) {
   }
   a = 1, b = 1;
   while (board[r1 - a][c1 - b] == ' ') {
-    if ((r1 - a) == 8 || (c1 - b) == -1) break;
+    if ((r1 - a) == -1 || (c1 - b) == -1) break;
     kaydet(((r1 - a) * 10) + c1 - b);
     a++;
     b++;
@@ -465,7 +465,7 @@ void camelw(int r1, int c1) {
   }
   a = 1, b = 1;
   while (board[r1 - a][c1 + b] == ' ') {
-    if ((r1 - a) == 8 || (c1 + b) == 8) break;
+    if ((r1 - a) == -1 || (c1 + b) == 8) break;
     kaydet(((r1 - a) * 10) + c1 + b);
     a++;
     b++;
@@ -476,7 +476,7 @@ void camelw(int r1, int c1) {
   a = 1;
   b = 1;
   while (board[r1 + a][c1 - b] == ' ') {
-    if ((r1 + a) == -1 || (c1 - b) == -1) break;
+    if ((r1 + a) == 8 || (c1 - b) == -1) break;
     kaydet(((r1 + a) * 10) + c1 - b);
     a++;
     b++;
@@ -487,41 +487,49 @@ void camelw(int r1, int c1) {
 }
 
 void kingb(int r1, int c1) {
-  if (board[r1][c1 + 1] == ' ') kaydet(((r1)*10) + c1 + 1);
+  if (board[r1][c1 + 1] == ' ' && (c1 + 1) < 8) kaydet(((r1)*10) + c1 + 1);
   if (checkforb(r1, c1 + 1) == 1) kaydet(((r1)*10) + c1 + 1);
-  if (board[r1][c1 - 1] == ' ') kaydet(((r1)*10) + c1 - 1);
+  if (board[r1][c1 - 1] == ' ' && (c1 - 1) > -1) kaydet(((r1)*10) + c1 - 1);
   if (checkforb(r1, c1 - 1) == 1) kaydet(((r1)*10) + c1 - 1);
-  if (board[r1 - 1][c1] == ' ') kaydet(((r1 - 1) * 10) + c1);
+  if (board[r1 - 1][c1] == ' ' && (r1 - 1) > -1) kaydet(((r1 - 1) * 10) + c1);
   if (checkforb(r1 - 1, c1) == 1) kaydet(((r1 - 1) * 10) + c1);
-  if (board[r1 + 1][c1] == ' ') kaydet(((r1 + 1) * 10) + c1);
+  if (board[r1 + 1][c1] == ' ' && (r1 + 1) < 8) kaydet(((r1 + 1) * 10) + c1);
   if (checkforb(r1 + 1, c1) == 1) kaydet(((r1 + 1) * 10) + c1);
-  if (board[r1 - 1][c1 + 1] == ' ') kaydet(((r1 - 1) * 10) + c1 + 1);
+  if (board[r1 - 1][c1 + 1] == ' ' && (r1 - 1) > -1 && (c1 + 1) < 8)
+    kaydet(((r1 - 1) * 10) + c1 + 1);
   if (checkforb(r1 - 1, c1 + 1) == 1) kaydet(((r1 - 1) * 10) + c1 + 1);
-  if (board[r1 + 1][c1 - 1] == ' ') kaydet(((r1 + 1) * 10) + c1 - 1);
+  if (board[r1 + 1][c1 - 1] == ' ' && (r1 + 1) < 8 && (c1 - 1) > -1)
+    kaydet(((r1 + 1) * 10) + c1 - 1);
   if (checkforb(r1 + 1, c1 - 1) == 1) kaydet(((r1 + 1) * 10) + c1 - 1);
-  if (board[r1 + 1][c1 + 1] == ' ') kaydet(((r1 + 1) * 10) + c1 + 1);
+  if (board[r1 + 1][c1 + 1] == ' ' && (r1 + 1) < 8 && (c1 + 1) < 8)
+    kaydet(((r1 + 1) * 10) + c1 + 1);
   if (checkforb(r1 + 1, c1 + 1) == 1) kaydet(((r1 + 1) * 10) + c1 + 1);
-  if (board[r1 - 1][c1 - 1] == ' ') kaydet(((r1 - 1) * 10) + c1 + 1);
-  if (checkforb(r1 - 1, c1 + 1) == 1) kaydet(((r1 - 1) * 10) + c1 + 1);
+  if (board[r1 - 1][c1 - 1] == ' ' && (r1 - 1) > -1 && (c1 - 1) > -1)
+    kaydet(((r1 - 1) * 10) + c1 - 1);
+  if (checkforb(r1 - 1, c1 - 1) == 1) kaydet(((r1 - 1) * 10) + c1 - 1);
 }
 
 void kingw(int r1, int c1) {
-  if (board[r1][c1 + 1] == ' ') kaydet(((r1)*10) + c1 + 1);
+  if (board[r1][c1 + 1] == ' ' && (c1 + 1) < 8) kaydet(((r1)*10) + c1 + 1);
   if (checkforw(r1, c1 + 1) == 1) kaydet(((r1)*10) + c1 + 1);
-  if (board[r1][c1 - 1] == ' ') kaydet(((r1)*10) + c1 - 1);
+  if (board[r1][c1 - 1] == ' ' && (c1 - 1) > -1) kaydet(((r1)*10) + c1 - 1);
   if (checkforw(r1, c1 - 1) == 1) kaydet(((r1)*10) + c1 - 1);
-  if (board[r1 - 1][c1] == ' ') kaydet(((r1 - 1) * 10) + c1);
+  if (board[r1 - 1][c1] == ' ' && (r1 - 1) > -1) kaydet(((r1 - 1) * 10) + c1);
   if (checkforw(r1 - 1, c1) == 1) kaydet(((r1 - 1) * 10) + c1);
-  if (board[r1 + 1][c1] == ' ') kaydet(((r1 + 1) * 10) + c1);
+  if (board[r1 + 1][c1] == ' ' && (r1 + 1) < 8) kaydet(((r1 + 1) * 10) + c1);
   if (checkforw(r1 + 1, c1) == 1) kaydet(((r1 + 1) * 10) + c1);
-  if (board[r1 - 1][c1 + 1] == ' ') kaydet(((r1 - 1) * 10) + c1 + 1);
+  if (board[r1 - 1][c1 + 1] == ' ' && (r1 - 1) > -1 && (c1 + 1) < 8)
+    kaydet(((r1 - 1) * 10) + c1 + 1);
   if (checkforw(r1 - 1, c1 + 1) == 1) kaydet(((r1 - 1) * 10) + c1 + 1);
-  if (board[r1 + 1][c1 - 1] == ' ') kaydet(((r1 + 1) * 10) + c1 - 1);
+  if (board[r1 + 1][c1 - 1] == ' ' && (r1 + 1) < 8 && (c1 - 1) > -1)
+    kaydet(((r1 + 1) * 10) + c1 - 1);
   if (checkforw(r1 + 1, c1 - 1) == 1) kaydet(((r1 + 1) * 10) + c1 - 1);
-  if (board[r1 + 1][c1 + 1] == ' ') kaydet(((r1 + 1) * 10) + c1 + 1);
+  if (board[r1 + 1][c1 + 1] == ' ' && (r1 + 1) < 8 && (c1 + 1) < 8)
+    kaydet(((r1 + 1) * 10) + c1 + 1);
   if (checkforw(r1 + 1, c1 + 1) == 1) kaydet(((r1 + 1) * 10) + c1 + 1);
-  if (board[r1 - 1][c1 - 1] == ' ') kaydet(((r1 - 1) * 10) + c1 + 1);
-  if (checkforw(r1 - 1, c1 + 1) == 1) kaydet(((r1 - 1) * 10) + c1 + 1);
+  if (board[r1 - 1][c1 - 1] == ' ' && (r1 - 1) > -1 && (c1 - 1) > -1)
+    kaydet(((r1 - 1) * 10) + c1 - 1);
+  if (checkforw(r1 - 1, c1 - 1) == 1) kaydet(((r1 - 1) * 10) + c1 - 1);
 }
 
 void queenb(int r1, int c1) {
@@ -699,6 +707,9 @@ void white() {
 again1:
   printf("\nSelect a piece (RC): ");
   scanf("%d", &p1);
+  if (p1 > 77) {
+    goto again1;
+  }
   c1 = p1 % 10;
   r1 = p1 / 10;
   switch (board[r1][c1]) {
@@ -724,25 +735,25 @@ again1:
       printf("Incorrect selection!");
       goto again1;
   }
+  if (possible[1] == 0) {
+    printf("\nPlease select a playable piece\n");
+    goto again1;
+  }
   printf("\nAvailable positions are:\n");
   while (z <= 9999) {
     if (possible[z] == 0) break;
     if (checkforw(possible[z] / 10, possible[z] % 10) == 1) {
-      printf("Enter %d for position %d*\n", z, possible[z]);
+      printf("\nEnter %d for position %d*\n", z, possible[z]);
     } else {
-      printf("Enter %d for position %d\n", z, possible[z]);
+      printf("\nEnter %d for position %d\n", z, possible[z]);
     }
     z++;
   }
 again3:
-  if (possible[1] == 0) {
-    printf("please select a valid piece");
-    goto again1;
-  }
   printf("\nEnter a position you want to move the piece to (RC): ");
   scanf("%d", &p2);
   if (checkinput(p2) == 0) {
-    printf("please enter valid number");
+    printf("Please enter a valid number");
     goto again3;
   }
   if (checkinput(p2) == 1) {
@@ -760,6 +771,9 @@ void black() {
 again2:
   printf("\nSelect a piece (RC): ");
   scanf("%d", &p1);
+  if (p1 > 77) {
+    goto again2;
+  }
   c1 = p1 % 10;
   r1 = p1 / 10;
   switch (board[r1][c1]) {
@@ -785,25 +799,25 @@ again2:
       printf("Incorrect selection!");
       goto again2;
   }
+  if (possible[1] == 0) {
+    printf("\nPlease select a playable piece\n");
+    goto again2;
+  }
   printf("\nAvailable positions are:\n");
   while (z <= 9999) {
     if (possible[z] == 0) break;
     if (checkforb(possible[z] / 10, possible[z] % 10) == 1) {
-      printf("Enter %d for position %d*\n", z, possible[z]);
+      printf("\nEnter %d for position %d*\n", z, possible[z]);
     } else {
-      printf("Enter %d for position %d\n", z, possible[z]);
+      printf("\nEnter %d for position %d\n", z, possible[z]);
     }
     z++;
   }
 again3:
-  if (possible[1] == 0) {
-    printf("please select a valid piece");
-    goto again2;
-  }
   printf("\nEnter a position you want to move the piece to (RC): ");
   scanf("%d", &p2);
   if (checkinput(p2) == 0) {
-    printf("please enter valid number");
+    printf("Please enter a valid number");
     goto again3;
   }
   if (checkinput(p2) == 1) {
